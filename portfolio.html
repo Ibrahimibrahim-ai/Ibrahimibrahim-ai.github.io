@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Ibrahim Ibrahim - ML Developer</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">IB</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="stats.html">Stats</a></li>
+                <li><a href="portfolio.html" class="active">Portfolio</a></li>
+            </ul>
+            <div class="mobile-nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Portfolio</h1>
+                <p>A showcase of my ML projects and applications</p>
+            </div>
+        </section>
+
+        <section class="portfolio-filter">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="computer-vision">Computer Vision</button>
+                    <button class="filter-btn" data-filter="nlp">NLP</button>
+                    <button class="filter-btn" data-filter="time-series">Time Series</button>
+                    <button class="filter-btn" data-filter="other">Other</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="portfolio-projects">
+            <div class="container">
+                <div class="projects-grid">
+                    <!-- Computer Vision Projects -->
+                    <div class="project-item" data-category="computer-vision" id="vision">
+                        <div class="project-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-microscope"></i>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <h2>White Blood Cells Classification</h2>
+                            <div class="project-tags">
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">Medical AI</span>
+                                <span class="tag">Classification</span>
+                            </div>
+                            <p>A deep learning system for automated classification of white blood cells from microscopy images. This project helps medical professionals in diagnosing blood-related conditions by accurately identifying different types of white blood cells.</p>
+                            <h3>Key Features:</h3>
+                            <ul>
+                                <li>Classification of 5 types of white blood cells with 97% accuracy</li>
+                                <li>Custom CNN architecture optimized for microscopy images</li>
+                                <li>Data augmentation techniques for robust performance</li>
+                                <li>Grad-CAM visualization for model interpretability</li>
+                            </ul>
+                            <div class="project-code">
+                                <pre><code>
+# Example classification model
+import tensorflow as tf
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+
+def build_wbc_classifier(num_classes=5):
+    # Base model with pre-trained weights
+    base_model = MobileNetV2(
+        input_shape=(224, 224, 3),
+        include_top=False,
+        weights='imagenet'
+    )
+    
+    # Freeze the base model layers
+    base_model.trainable = False
+    
+    # Add custom classification head
+    model = tf.keras.Sequential([
+        base_model,
+        GlobalAveragePooling2D(),
+        Dense(128, activation='relu'),
+        Dense(num_classes, activation='softmax')
+    ])
+    
+    return model
+
+# Cell types to classify
+cell_types = [
+    'Neutrophil', 
+    'Eosinophil', 
+    'Basophil', 
+    'Lymphocyte', 
+    'Monocyte'
+]
+                                </code></pre>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.kaggle.com/code/ibrahimnibrahim/white-blood-cells-98-test-a-dataset-accuracy" class="btn secondary"><i class="fab fa-kaggle"></i> View Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NLP Project -->
+                    <div class="project-item" data-category="nlp" id="nmt">
+                        <div class="project-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <h2>AI or Human Text Classification</h2>
+                            <div class="project-tags">
+                                <span class="tag">NLP</span>
+                                <span class="tag">Transformers</span>
+                                <span class="tag">Text Classification</span>
+                            </div>
+                            <p>A sophisticated NLP system that can distinguish between human-written and AI-generated text. In the era of advanced language models, this tool helps identify content authenticity with high accuracy across various domains and writing styles.</p>
+                            <h3>Key Features:</h3>
+                            <ul>
+                                <li>98.5% accuracy in detecting AI-generated content</li>
+                                <li>Fine-tuned BERT model with custom classification head</li>
+                                <li>Support for multiple AI generators (GPT, Claude, Bard, etc.)</li>
+                                <li>Confidence scoring with detailed linguistic feature analysis</li>
+                            </ul>
+                            <div class="project-code">
+                                <pre><code>
+# Example AI text detection model
+import tensorflow as tf
+from transformers import BertTokenizer, TFBertModel
+
+class AITextDetector:
+    def __init__(self):
+        # Load pre-trained model and tokenizer
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.bert = TFBertModel.from_pretrained('bert-base-uncased')
+        
+        # Build classification model
+        self.model = self._build_model()
+        
+    def _build_model(self):
+        # Input layers
+        input_ids = tf.keras.layers.Input(shape=(512,), dtype=tf.int32, name='input_ids')
+        attention_mask = tf.keras.layers.Input(shape=(512,), dtype=tf.int32, name='attention_mask')
+        
+        # BERT encoder
+        bert_outputs = self.bert(input_ids, attention_mask=attention_mask)
+        pooled_output = bert_outputs[1]  # [CLS] token embedding
+        
+        # Classification head
+        x = tf.keras.layers.Dense(256, activation='relu')(pooled_output)
+        x = tf.keras.layers.Dropout(0.2)(x)
+        x = tf.keras.layers.Dense(64, activation='relu')(x)
+        outputs = tf.keras.layers.Dense(1, activation='sigmoid')(x)
+        
+        # Compile model
+        model = tf.keras.Model(inputs=[input_ids, attention_mask], outputs=outputs)
+        model.compile(
+            optimizer=tf.keras.optimizers.Adam(1e-5),
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
+        return model
+        
+    def predict(self, text):
+        # Tokenize text
+        tokens = self.tokenizer(
+            text, 
+            padding='max_length', 
+            truncation=True, 
+            max_length=512, 
+            return_tensors='tf'
+        )
+        
+        # Get prediction
+        prediction = self.model.predict([tokens['input_ids'], tokens['attention_mask']])
+        score = float(prediction[0][0])
+        
+        return {
+            'is_ai_generated': score > 0.5,
+            'confidence': score if score > 0.5 else 1 - score,
+            'score': score
+        }
+                                </code></pre>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.kaggle.com/code/ibrahimnibrahim/ai-vs-human-with-99-8-val-accuracy" class="btn secondary"><i class="fab fa-kaggle"></i> View Code</a>
+                          
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Time Series Project -->
+                    <div class="project-item" data-category="time-series" id="forecasting">
+                        <div class="project-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <h2>Financial Time Series Forecasting</h2>
+                            <div class="project-tags">
+                                <span class="tag">Time Series</span>
+                                <span class="tag">LSTM</span>
+                                <span class="tag">Forecasting</span>
+                            </div>
+                            <p>An advanced time series forecasting system for financial market prediction using TensorFlow's LSTM and attention mechanisms. This system processes multi-variate time series data to predict market movements with high accuracy.</p>
+                            <h3>Key Features:</h3>
+                            <ul>
+                                <li>Hybrid LSTM-Attention architecture for temporal dependencies</li>
+                                <li>Multi-horizon forecasting capabilities</li>
+                                <li>Feature importance analysis using integrated gradients</li>
+                                <li>Uncertainty quantification with Monte Carlo Dropout</li>
+                            </ul>
+                            <div class="project-code">
+                                <pre><code>
+# Example time series model
+import tensorflow as tf
+
+def build_lstm_model(time_steps, features, horizon=5):
+    inputs = tf.keras.Input(shape=(time_steps, features))
+    
+    # LSTM layers with residual connections
+    x = tf.keras.layers.LSTM(128, return_sequences=True)(inputs)
+    x = tf.keras.layers.Dropout(0.2)(x)
+    x = tf.keras.layers.LSTM(64)(x)
+    
+    # Multi-horizon output
+    outputs = tf.keras.layers.Dense(horizon)(x)
+    
+    model = tf.keras.Model(inputs=inputs, outputs=outputs)
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(0.001),
+        loss='mse',
+        metrics=['mae']
+    )
+    return model
+                                </code></pre>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.kaggle.com/code/ibrahimnibrahim/walmart-stock-mse-0-01-for-test" class="btn secondary"><i class="fab fa-kaggle"></i> View Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cognitive Performance Study Case -->
+                    <div class="project-item" data-category="other">
+                        <div class="project-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <h2>Study Case for Cognitive Performance</h2>
+                            <div class="project-tags">
+                                <span class="tag">Other</span>
+                                <span class="tag">Cognitive Science</span>
+                                <span class="tag">Data Analysis</span>
+                            </div>
+                            <p>A comprehensive analysis of factors affecting cognitive performance using machine learning techniques. This study examines the relationship between sleep patterns, nutrition, exercise, and cognitive function to identify key predictors of mental performance.</p>
+                            <h3>Key Features:</h3>
+                            <ul>
+                                <li>Analysis of 500+ participants across different age groups</li>
+                                <li>Multivariate regression models for performance prediction</li>
+                                <li>Feature importance analysis to identify key cognitive factors</li>
+                                <li>Interactive dashboard for visualizing cognitive performance metrics</li>
+                            </ul>
+                            <div class="project-code">
+                                <pre><code>
+# Cognitive performance analysis
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load and prepare data
+def prepare_cognitive_data(data_path):
+    # Load dataset
+    df = pd.read_csv(data_path)
+    
+    # Feature engineering
+    df['sleep_quality'] = df['sleep_duration'] * df['sleep_efficiency']
+    df['exercise_index'] = df['exercise_minutes'] * df['exercise_intensity']
+    
+    # Define features and target
+    features = [
+        'age', 'sleep_quality', 'exercise_index', 
+        'nutrition_score', 'stress_level', 'hydration'
+    ]
+    
+    X = df[features]
+    y = df['cognitive_score']
+    
+    return X, y, features
+
+# Train model and analyze feature importance
+def analyze_cognitive_factors(X, y, features):
+    # Split data
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+    
+    # Train random forest model
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    
+    # Evaluate model
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    
+    # Get feature importance
+    importance = model.feature_importances_
+    
+    # Create importance dataframe
+    imp_df = pd.DataFrame({
+        'Feature': features,
+        'Importance': importance
+    }).sort_values('Importance', ascending=False)
+    
+    return model, imp_df, mse, r2
+                                </code></pre>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.kaggle.com/code/ibrahimnibrahim/study-case-for-cognitive-performance" class="btn secondary"><i class="fab fa-kaggle"></i> View Code</a>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brain Tumor Classification Project -->
+                    <div class="project-item" data-category="computer-vision">
+                        <div class="project-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <h2>Brain Tumor Classification</h2>
+                            <div class="project-tags">
+                                <span class="tag">Computer Vision</span>
+                                <span class="tag">Medical Imaging</span>
+                                <span class="tag">Deep Learning</span>
+                            </div>
+                            <p>An advanced deep learning system for classifying brain tumors from MRI scans. This project assists radiologists in diagnosing different types of brain tumors with high accuracy, potentially speeding up treatment decisions.</p>
+                            <h3>Key Features:</h3>
+                            <ul>
+                                <li>Multi-class classification of brain tumors (glioma, meningioma, pituitary)</li>
+                                <li>95% accuracy on test dataset of MRI scans</li>
+                                <li>Transfer learning with fine-tuned ResNet architecture</li>
+                                <li>Heatmap visualization for explainable AI in medical diagnosis</li>
+                            </ul>
+                            <div class="project-code">
+                                <pre><code>
+# Brain tumor classification model
+import tensorflow as tf
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, Dropout
+
+def build_tumor_classifier():
+    # Base model with pre-trained weights
+    base_model = ResNet50(
+        input_shape=(224, 224, 3),
+        include_top=False,
+        weights='imagenet'
+    )
+    
+    # Fine-tune the top layers
+    for layer in base_model.layers[-30:]:
+        layer.trainable = True
+    
+    # Custom classification head
+    model = tf.keras.Sequential([
+        base_model,
+        GlobalAveragePooling2D(),
+        Dropout(0.3),
+        Dense(256, activation='relu'),
+        Dropout(0.5),
+        Dense(3, activation='softmax')  # 3 tumor classes
+    ])
+    
+    return model
+                                </code></pre>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.kaggle.com/code/ibrahimnibrahim/brain-tumor-classification-cnn-acc-val-93" class="btn secondary"><i class="fab fa-kaggle"></i> View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Have a project in mind?</h2>
+                <p>Let's discuss how machine learning can help solve your challenges</p>
+                <div class="contact-options">
+                    <a href="mailto:ibrahim.n.ibrahim.21@gmail.com" class="btn primary"><i class="fas fa-envelope"></i> Email Me</a>
+                    <a href="https://www.linkedin.com/in/ibrahim-ibrahim-51b784217" class="btn secondary"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    <a href="tel:+963994422232" class="btn secondary"><i class="fas fa-phone"></i> Call</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Ibrahim Ibrahim. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="JS/main.js"></script>
+    <script src="JS/portfolio.js"></script>
+</body>
+</html> 
